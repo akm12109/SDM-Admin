@@ -1,0 +1,116 @@
+/* Dashboard.css */
+
+/* Background with moving hacker-like gradient */
+.dashboard-container {
+    background: linear-gradient(135deg, #1e1e1e, #2d003e, #7300b5);
+    background-size: 300% 300%;
+    animation: movingGradient 10s ease-in-out infinite;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: row; /* For left-right layout */
+    padding: 20px;
+  }
+  
+  /* Gradient movement animation */
+  @keyframes movingGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Header styling with some bounce effect */
+  .header-section {
+    text-align: center;
+    margin-bottom: 20px; /* Reduced margin for better spacing */
+  }
+  
+  .main-heading {
+    font-size: 3rem; /* Slightly reduced font size */
+    font-weight: 700;
+    letter-spacing: 2px;
+    animation: bounce 1.5s infinite;
+    color: #00ffb9; /* Changed color for main heading */
+  }
+  
+  .sub-heading {
+    font-size: 1.2rem; /* Adjusted font size */
+    margin-top: 10px;
+    opacity: 0.8;
+    animation: flicker 3s infinite alternate;
+  }
+  
+  /* Left side styling */
+  .left-side {
+    width: 20%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px; /* Added rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Right side styling */
+  .right-side {
+    width: 80%;
+    padding: 20px;
+  }
+  
+  /* Important Notices, Classes, Suggested Videos, and Homework cards */
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px; /* Added rounded corners */
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Developer photo container */
+  .developer-photo-container {
+    margin-bottom: 20px;
+  }
+  
+  .developer-photo {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: 4px solid white;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Animation for photo */
+  .card:hover .developer-photo {
+    transform: rotate(360deg);
+  }
+  
+  /* Bounce animation for heading */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Flicker animation for subheading */
+  @keyframes flicker {
+    0% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  

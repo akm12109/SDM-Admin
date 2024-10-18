@@ -1,0 +1,55 @@
+.student-profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.profile-card {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%; /* Adjust width as needed */
+}
+
+.profile-photo {
+    flex: 0.3; /* Photo takes up 30% of the card */
+    text-align: center;
+}
+
+.profile-photo img {
+    border-radius: 50%; /* Make it circular */
+    width: 120px; /* Size of the profile image */
+    height: 120px; /* Size of the profile image */
+}
+
+.profile-details {
+    flex: 0.7; /* Details take up 70% of the card */
+    padding-left: 20px; /* Space between photo and details */
+}
+
+.profile-details h2 {
+    margin-bottom: 10px;
+    color: #1E90FF; /* Heading color */
+}
+
+.profile-details p {
+    margin: 5px 0;
+    font-size: 18px; /* Font size for details */
+}
+
+button {
+    background-color: #1E90FF; /* Button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}

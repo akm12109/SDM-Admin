@@ -1,0 +1,169 @@
+/* Background with moving hacker-like gradient */
+.developer-support-container {
+    background: linear-gradient(135deg, #1e1e1e, #2d003e, #7300b5);
+    background-size: 300% 300%;
+    animation: movingGradient 10s ease-in-out infinite;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Gradient movement animation */
+  @keyframes movingGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Header styling with some bounce effect */
+  .header-section {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .main-heading {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    animation: bounce 1.5s infinite;
+  }
+  
+  .sub-heading {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    opacity: 0.8;
+    animation: flicker 3s infinite alternate;
+  }
+  
+  /* Developer grid */
+  .developer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  /* Developer card hover and animation */
+  .developer-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .developer-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+  }
+  
+  .card-inner {
+    z-index: 2;
+    position: relative;
+  }
+  
+  .developer-photo-container {
+    margin-bottom: 20px;
+  }
+  
+  .developer-photo {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: 4px solid white;
+    transition: transform 0.3s ease;
+  }
+  
+  .developer-card:hover .developer-photo {
+    transform: rotate(360deg);
+  }
+  
+  .developer-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .developer-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .developer-contact p {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .developer-contact p:hover {
+    color: #00ffb9;
+  }
+  
+  /* Background particle effect */
+  .developer-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+  }
+  
+  .developer-card:hover::before {
+    left: 100%;
+  }
+  
+  /* Bounce animation for heading */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Flicker animation for subheading */
+  @keyframes flicker {
+    0% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  /* Dashboard.css */
+.developer-support-container {
+    background: linear-gradient(135deg, #1e1e1e, #2d003e, #7300b5);
+    background-size: 300% 300%;
+    animation: movingGradient 10s ease-in-out infinite;
+  }
+  
+  @keyframes movingGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
