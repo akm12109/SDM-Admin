@@ -14,6 +14,8 @@ const AdminPanel = () => {
   const [classTime, setClassTime] = useState('');
   const [classJitsiLink, setClassJitsiLink] = useState('https://meet.jitsi.com/VideoXClass');
   const [videoTitle, setVideoTitle] = useState('');
+  const [videoDescription, setVideoDescription] = useState(''); // Added
+  const [videoLink, setVideoLink] = useState(''); // Added
   const [homeworkTitle, setHomeworkTitle] = useState('');
   const [homeworkPhoto, setHomeworkPhoto] = useState(null);
   const [dueDate, setDueDate] = useState(''); // New state for due date
@@ -57,7 +59,7 @@ const AdminPanel = () => {
       });
       setClassSubject('');
       setClassTime('');
-      setClassJitsiLink('https://meet.jitsi.com/VideoXClass'); // Reset with protocol
+      setClassJitsiLink(''); // Reset with protocol
       toast.success('Class added successfully!'); // Using toast notifications
     } catch (error) {
       console.error('Error adding class:', error.message);
@@ -66,16 +68,20 @@ const AdminPanel = () => {
 
   // Function to handle adding videos
   const handleAddVideo = async () => {
-    if (!videoTitle) {
-      setErrorMessage('Video title cannot be empty');
+    if (!videoTitle || !videoDescription || !videoLink) {
+      setErrorMessage('Video title, description, and link cannot be empty');
       return;
     }
     try {
       await addDoc(collection(db, 'videos'), {
         title: videoTitle,
+        description: videoDescription,
+        link: videoLink,
         createdAt: new Date(),
       });
       setVideoTitle('');
+      setVideoDescription('');
+      setVideoLink('');
       toast.success('Video added successfully!'); // Using toast notifications
     } catch (error) {
       console.error('Error adding video:', error.message);
@@ -222,9 +228,23 @@ const AdminPanel = () => {
               onChange={(e) => setVideoTitle(e.target.value)}
               className="p-3 border border-gray-300 rounded-md w-full mb-4"
             />
+            <input
+              type="text"
+              placeholder="Video description"
+              value={videoDescription}
+              onChange={(e) => setVideoDescription(e.target.value)}
+              className="p-3 border border-gray-300 rounded-md w-full mb-4"
+            />
+            <input
+              type="text"
+              placeholder="Video link"
+              value={videoLink}
+              onChange={(e) => setVideoLink(e.target.value)}
+              className="p-3 border border-gray-300 rounded-md w-full mb-4"
+            />
             <button
               onClick={handleAddVideo}
-              className="w-full bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 transition duration-300"
+              className="w-full bg-yellow-600 text-white py-3 rounded-md hover:bg-yellow-700 transition duration-300"
             >
               Add Video
             </button>
@@ -245,98 +265,42 @@ const AdminPanel = () => {
               className="p-3 border border-gray-300 rounded-md w-full mb-4"
             />
             <input
-              type="date" // Input for due date
+              type="file"
+              onChange={handleHomeworkPhotoChange}
+              className="p-3 border border-gray-300 rounded-md w-full mb-4"
+            />
+            <input
+              type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
               className="p-3 border border-gray-300 rounded-md w-full mb-4"
             />
-            <input
-              type="file"
-              onChange={handleHomeworkPhotoChange}
-              className="border border-gray-300 rounded-md w-full mb-4"
-            />
-            {uploadProgress > 0 && (
-              <div className="mb-2">Upload Progress: {uploadProgress.toFixed(2)}%</div>
-            )}
             <button
               onClick={handleAddHomework}
-              className="w-full bg-yellow-600 text-white py-3 rounded-md hover:bg-yellow-700 transition duration-300"
+              className="w-full bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 transition duration-300"
             >
               Add Homework
             </button>
           </motion.div>
         </div>
 
-        {/* New Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-          {/* Add Teachers Button */}
-          <Link to="/t---p">
-            <motion.button 
-              className="w-full bg-teal-600 text-white py-3 rounded-md hover:bg-teal-700 transition duration-300"
-              whileHover={{ scale: 1.05 }} 
-              transition={{ duration: 0.2 }}
-            >
-              Add Teachers
-            </motion.button>
-          </Link>
-
-          {/* Edit Data Button */}
-          <Link to="/listpage">
-            <motion.button 
-              className="w-full bg-orange-600 text-white py-3 rounded-md hover:bg-orange-700 transition duration-300"
-              whileHover={{ scale: 1.05 }} 
-              transition={{ duration: 0.2 }}
-            >
-              Edit Data
-            </motion.button>
-          </Link>
-
-          {/* Register New Student Button */}
-          <Link to="/register">
-            <motion.button 
-              className="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition duration-300"
-              whileHover={{ scale: 1.05 }} 
-              transition={{ duration: 0.2 }}
-            >
-              Register New Student
-            </motion.button>
-          </Link>
-
-          {/* Add Photos Button */}
-          <Link to="/photos-add">
-            <motion.button 
-              className="w-full bg-pink-600 text-white py-3 rounded-md hover:bg-pink-700 transition duration-300"
-              whileHover={{ scale: 1.05 }} 
-              transition={{ duration: 0.2 }}
-            >
-              Add Photos
-            </motion.button>
-          </Link>
-
-          {/* Add Events Button */}
-          <Link to="/addevent">
-            <motion.button 
-              className="w-full bg-purple-800 text-white py-3 rounded-md hover:bg-purple-900 transition duration-300"
-              whileHover={{ scale: 1.05 }} 
-              transition={{ duration: 0.2 }}
-            >
-              Add Events
-            </motion.button>
-          </Link>
-        </div>
+        {uploadProgress > 0 && (
+          <div className="mt-4">
+            <p className="text-center text-gray-700">Upload Progress: {uploadProgress}%</p>
+            <div className="w-full bg-gray-200 h-4 rounded-md overflow-hidden">
+              <div 
+                className="bg-green-600 h-full" 
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-// PropTypes validation
-AdminPanel.propTypes = {
-  title: PropTypes.string,
-};
-
-// Default props
-AdminPanel.defaultProps = {
-  title: 'Admin Panel',
-};
+// PropTypes validation (if needed for props)
+AdminPanel.propTypes = {};
 
 export default AdminPanel;
