@@ -1,6 +1,6 @@
 // src/components/Register.js
-import React, { useState } from 'react';
-import { getDatabase, ref, set } from "firebase/database";
+import React, { useEffect, useState } from 'react';
+import { getDatabase, ref, set, onValue, off } from "firebase/database"; // <-- Add 'off' here
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebaseConfig';
 
@@ -12,6 +12,27 @@ const Register = () => {
   const [age, setAge] = useState('');
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [error, setError] = useState('');
+  const [users, setUsers] = useState([]); // State to hold registered users
+
+  useEffect(() => {
+    const db = getDatabase();
+    const usersRef = ref(db, 'users/');
+    
+    // Listener to fetch users from Firebase
+    const unsubscribe = onValue(usersRef, (snapshot) => {
+      const userData = snapshot.val();
+      const usersArray = [];
+      for (let id in userData) {
+        usersArray.push({ id, ...userData[id] });
+      }
+      setUsers(usersArray);
+    });
+
+    // Cleanup listener on unmount
+    return () => {
+      unsubscribe(); // Use the unsubscribe function to detach the listener
+    };
+  }, []);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -29,9 +50,17 @@ const Register = () => {
           email: email,
           profilePhoto: profilePhoto ? URL.createObjectURL(profilePhoto) : null
         });
+
+        // Clear form fields
+        setName('');
+        setClassName('');
+        setAge('');
+        setEmail('');
+        setPassword('');
+        setProfilePhoto(null);
         
         console.log("User registered:", userCredential.user);
-        // Redirect to your dashboard here
+        // Redirect to your dashboard here if needed
       })
       .catch((error) => {
         setError('Registration failed: ' + error.message);
@@ -40,7 +69,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col items-center h-screen">
       <form className="w-full max-w-sm p-4 bg-white shadow-lg rounded" onSubmit={handleRegister}>
         <h2 className="text-2xl mb-4 text-center">Register Student</h2>
         <div className="mb-4">
@@ -107,6 +136,24 @@ const Register = () => {
           Register
         </button>
       </form>
+
+      {/* Display Registered Users */}
+      <div className="mt-8 w-full max-w-4xl">
+        <h3 className="text-2xl mb-4 text-center">Registered Users</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {users.map(user => (
+            <div key={user.id} className="p-4 bg-gray-100 rounded shadow">
+              {user.profilePhoto && (
+                <img src={user.profilePhoto} alt={user.name} className="w-full h-32 object-cover rounded mb-2" />
+              )}
+              <h4 className="font-bold">{user.name}</h4>
+              <p>Class: {user.class}</p>
+              <p>Age: {user.age}</p>
+              <p>Email: {user.email}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
